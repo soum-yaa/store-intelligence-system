@@ -289,6 +289,9 @@ This submission includes:
 ## Author
 
 Soumya Verma
+
 B.Tech Final Year
+
 Madan Mohan Malaviya University of Technology
+
 Store Intelligence Assessment Submission
