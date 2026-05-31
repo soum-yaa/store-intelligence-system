@@ -2,7 +2,7 @@
 
 ## Overview
 
-Store Intelligence Backend is a FastAPI-based analytics platform for processing retail store events and generating operational insights.
+Store Intelligence Backend is a FastAPI-based analytics platform for processing retail store events and generating actionable business insights.
 
 The system supports:
 
@@ -14,7 +14,7 @@ The system supports:
 * Health monitoring
 * Docker deployment
 
-The project also includes a computer vision pipeline that processes CCTV footage, tracks visitors, and generates store events.
+The project also includes a computer vision pipeline that processes CCTV footage, tracks visitors, and generates structured store events.
 
 ---
 
@@ -48,9 +48,13 @@ Analytics APIs      Monitoring APIs
 
 ## Architecture Diagram
 
-See:
+The complete system architecture is available in:
 
+```text
 docs/architecture.png
+```
+
+---
 
 ## Tech Stack
 
@@ -92,8 +96,9 @@ project/
 │
 ├── pipeline/
 │   ├── detect.py
+│   ├── detect_visual.py
 │   ├── track_cam3.py
-│   ├── generate_events.py
+│   ├── generate_events_cam1.py
 │   └── push_events.py
 │
 ├── output/
@@ -118,10 +123,10 @@ python -m venv venv
 
 ### Activate
 
-Windows:
+Windows PowerShell:
 
-```bash
-venv\Scripts\activate
+```powershell
+.\venv\Scripts\Activate.ps1
 ```
 
 ### Install Dependencies
@@ -168,7 +173,7 @@ http://127.0.0.1:8000/docs
 GET /health
 ```
 
-Returns service health status.
+Returns service health status and database connectivity.
 
 ---
 
@@ -190,13 +195,14 @@ GET /stores/{store_id}/metrics
 
 Returns:
 
-* total events
-* unique visitors
-* entries
-* exits
-* conversion rate
-* queue depth
-* average dwell
+* Total events
+* Unique visitors
+* Entries
+* Exits
+* Conversion rate
+* Queue depth
+* Average dwell time
+* Abandonment rate
 
 ---
 
@@ -232,17 +238,40 @@ Returns operational anomalies.
 
 ## Sample Results
 
-Current processed store:
+Processed Store:
 
 ```text
 STORE_001
 ```
 
-Metrics generated from:
+Generated Analytics:
 
-* 58 CV-generated events
-* Multiple tracked visitors
-* Zone-level analytics
+* Total Events: 64
+* Unique Visitors: 20
+* Entries: 20
+* Exits: 18
+* Heatmap Analytics across multiple store zones
+* Automatic anomaly detection
+* Visitor dwell-time computation
+
+---
+
+## Assessment Deliverables
+
+This submission includes:
+
+* FastAPI backend services
+* Event ingestion pipeline
+* Store analytics APIs
+* Funnel analytics
+* Heatmap analytics
+* Anomaly detection
+* Health monitoring APIs
+* SQLite persistence layer
+* Dockerized deployment
+* Computer vision event generation pipeline
+* System design documentation
+* Architecture diagram
 
 ---
 
@@ -250,14 +279,16 @@ Metrics generated from:
 
 * Multi-camera identity matching
 * Queue estimation
-* Real-time streaming
+* Real-time event streaming
 * Interactive dashboard
 * Advanced conversion analytics
+* Product-level shopper journey analysis
 
 ---
 
 ## Author
 
 Soumya Verma
-B.Tech Final Year, Madan Mohan Malaviya University of Technology
+B.Tech Final Year
+Madan Mohan Malaviya University of Technology
 Store Intelligence Assessment Submission
