@@ -1,6 +1,4 @@
 from sqlalchemy.orm import Session
-from datetime import datetime, timedelta, timezone
-
 from app.database import EventDB
 
 

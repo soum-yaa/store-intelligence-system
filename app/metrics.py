@@ -8,7 +8,7 @@ def get_store_metrics(db: Session, store_id: str):
 
     customer_events = db.query(EventDB).filter(
         EventDB.store_id == store_id,
-        EventDB.is_staff == False
+        EventDB.is_staff.is_(False)
     )
 
     total_events = customer_events.count()

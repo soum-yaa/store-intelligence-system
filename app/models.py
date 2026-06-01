@@ -27,4 +27,4 @@ class Event(BaseModel):
 
     confidence: float
 
-    metadata: Metadata
+    metadata: Optional[Metadata] = None

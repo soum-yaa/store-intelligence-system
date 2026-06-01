@@ -1,17 +1,17 @@
+from typing import List
+
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
 from app.models import Event
-from app.database import Base, SessionLocal
+from app.database import SessionLocal
 from app.ingestion import save_event
-
 from app.metrics import get_store_metrics
 from app.health import get_health
 from app.funnel import get_funnel
 from app.heatmap import get_heatmap
 from app.anomalies import get_anomalies
 
-from typing import List
 
 app = FastAPI(
     title="Store Intelligence API"
@@ -30,14 +30,6 @@ def get_db():
 def root():
     return {
         "message": "Store Intelligence API Running"
-    }
-
-
-@app.post("/test-event")
-def create_event(event: Event):
-    return {
-        "message": "Event received",
-        "event": event
     }
 
 
@@ -64,6 +56,7 @@ def ingest_events(
         "duplicates": duplicates
     }
 
+
 @app.get("/stores/{store_id}/metrics")
 def store_metrics(
     store_id: str,
@@ -71,11 +64,6 @@ def store_metrics(
 ):
     return get_store_metrics(db, store_id)
 
-@app.get("/health")
-def health(
-    db: Session = Depends(get_db)
-):
-    return get_health(db)
 
 @app.get("/stores/{store_id}/funnel")
 def store_funnel(
@@ -84,6 +72,7 @@ def store_funnel(
 ):
     return get_funnel(db, store_id)
 
+
 @app.get("/stores/{store_id}/heatmap")
 def store_heatmap(
     store_id: str,
@@ -91,9 +80,17 @@ def store_heatmap(
 ):
     return get_heatmap(db, store_id)
 
+
 @app.get("/stores/{store_id}/anomalies")
 def store_anomalies(
     store_id: str,
     db: Session = Depends(get_db)
 ):
     return get_anomalies(db, store_id)
+
+
+@app.get("/health")
+def health(
+    db: Session = Depends(get_db)
+):
+    return get_health(db)

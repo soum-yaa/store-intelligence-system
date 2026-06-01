@@ -18,7 +18,11 @@ def save_event(db: Session, event: Event):
     dwell_ms=event.dwell_ms,
     is_staff=event.is_staff,
     confidence=event.confidence,
-    metadata_json=event.metadata.model_dump()
+    mmetadata_json=(
+    event.metadata.model_dump()
+    if event.metadata
+    else None
+)
 )
 
     try:
