@@ -1,6 +1,9 @@
+import time
+import uuid
+import logging
 from typing import List
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 from sqlalchemy.orm import Session
 
 from app.models import Event
@@ -13,9 +16,44 @@ from app.heatmap import get_heatmap
 from app.anomalies import get_anomalies
 
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(message)s"
+)
+
+logger = logging.getLogger("store-intelligence-api")
+
+
 app = FastAPI(
     title="Store Intelligence API"
 )
+
+
+@app.middleware("http")
+async def structured_logging_middleware(request: Request, call_next):
+    trace_id = str(uuid.uuid4())
+    start_time = time.time()
+
+    response = await call_next(request)
+
+    latency_ms = round((time.time() - start_time) * 1000, 2)
+
+    endpoint = request.url.path
+    store_id = request.path_params.get("store_id", None)
+
+    log_payload = {
+        "trace_id": trace_id,
+        "endpoint": endpoint,
+        "store_id": store_id,
+        "latency_ms": latency_ms,
+        "status_code": response.status_code
+    }
+
+    logger.info(log_payload)
+
+    response.headers["X-Trace-Id"] = trace_id
+
+    return response
 
 
 def get_db():
