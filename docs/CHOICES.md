@@ -307,6 +307,78 @@ The architecture fully supports conversion computation when billing events can b
 * Product-level conversion analytics
 
 ---
+# AI-Assisted Engineering Decisions
+
+AI assistance was used during architecture review, technology selection, implementation validation, and trade-off analysis.
+
+## Detection Model
+
+AI suggested evaluating multiple detection models including YOLOv8, Faster R-CNN, SSD, and RT-DETR.
+
+Final Choice:
+YOLOv8
+
+Reason:
+YOLOv8 provided the best balance between accuracy, inference speed, deployment simplicity, and integration with OpenCV.
+
+---
+
+## Backend Framework
+
+AI suggested FastAPI and Flask as suitable backend options.
+
+Final Choice:
+FastAPI
+
+Reason:
+Automatic schema validation, OpenAPI documentation generation, strong typing, and higher developer productivity.
+
+---
+
+## Storage Layer
+
+AI suggested both SQLite and PostgreSQL.
+
+Final Choice:
+SQLite
+
+Reason:
+The challenge dataset size and deployment requirements did not justify additional infrastructure complexity. SQLite provided a lightweight solution while maintaining a straightforward migration path to PostgreSQL.
+
+---
+
+## Analytics Computation Strategy
+
+AI suggested two approaches:
+
+1. Pre-computed metrics during ingestion.
+2. Query-time metric computation.
+
+Final Choice:
+Query-time metric computation.
+
+Reason:
+Simpler implementation, easier debugging, and always reflects the latest stored events.
+
+---
+
+## Anomaly Detection
+
+AI suggested both rule-based and machine-learning-based anomaly detection approaches.
+
+Final Choice:
+Rule-based anomaly detection.
+
+Reason:
+Explainability and deterministic behaviour were prioritized for the assessment environment. Machine-learning-based anomaly detection remains a future enhancement.
+
+---
+
+## Role of AI Assistance
+
+AI assistance was used as a design-review and implementation-support tool.
+
+Final engineering decisions, architecture choices, trade-off evaluation, implementation details, testing, and validation were performed and finalized by the author based on project requirements and observed system behaviour.
 
 # Conclusion
 

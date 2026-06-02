@@ -282,6 +282,49 @@ Docker Compose is used for local deployment and testing.
 
 ---
 
+# AI-Assisted Decisions
+
+## 1. Detection Model Selection
+
+AI assistance was used to compare multiple person-detection approaches such as YOLOv8, RT-DETR, MediaPipe, and heavier two-stage detectors.
+
+The AI suggestion was to begin with YOLOv8 because it provides a strong balance between detection quality, inference speed, ease of integration, and deployment simplicity.
+
+I agreed with this recommendation and selected YOLOv8 because the challenge focuses on building a complete end-to-end system rather than training a custom model from scratch. YOLOv8 also integrates easily with OpenCV and supports fast experimentation on retail CCTV footage.
+
+## 2. Tracking and Visitor Identity
+
+AI suggested using a tracking layer after detection instead of counting raw detections frame by frame.
+
+I followed this suggestion and used ByteTrack-style tracking because counting detections directly would overcount the same visitor across frames. Tracking allows the system to assign visitor IDs and generate higher-level events such as ENTRY, EXIT, ZONE_DWELL, and REENTRY.
+
+During testing, I observed that identity switches can still occur during occlusion or when people move together. This limitation is documented in CHOICES.md, and the future improvement path is to add stronger person re-identification.
+
+## 3. Event Schema Design
+
+AI initially suggested a minimal schema containing visitor ID, event type, timestamp, and store ID.
+
+I expanded the schema to include camera_id, zone_id, dwell_ms, is_staff, confidence, and metadata because these fields are required for downstream analytics such as heatmap generation, funnel computation, staff exclusion, queue tracking, and anomaly detection.
+
+This decision made the event layer more expressive and closer to production use.
+
+## 4. API Architecture
+
+AI suggested two approaches for analytics computation:
+
+1. Precompute metrics during ingestion.
+2. Compute metrics at query time from the event table.
+
+I chose query-time computation for this assessment because it keeps the implementation simple, transparent, and easy to debug. It also ensures that API responses always reflect the latest stored events.
+
+For a larger production system, the design can evolve toward pre-aggregated metrics using a streaming system such as Kafka or Redis streams.
+
+## 5. Documentation and Trade-Off Review
+
+AI was also used to review implementation trade-offs and identify missing evaluation criteria such as Docker execution, documentation, idempotent ingestion, and explainable anomaly detection.
+
+I used these suggestions as a checklist, but retained the final decisions based on project constraints, implementation time, and the scoring rubric.
+
 # Future Enhancements
 
 ## Computer Vision

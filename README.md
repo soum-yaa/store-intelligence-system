@@ -173,6 +173,59 @@ The detection pipeline converts CCTV footage into structured behavioural events.
 
 ```bash
 python pipeline/detect.py
+```
+
+### 2. Generate Detection Video with Bounding Boxes
+
+```bash
+python pipeline/detect_visual.py
+```
+
+### 3. Run Tracking
+
+```bash
+python pipeline/track_cam3.py
+```
+
+### 4. Generate Events from CCTV
+
+```bash
+python pipeline/generate_events_cam1.py
+```
+
+Generated events are saved at:
+
+```text
+output/events.jsonl
+```
+
+### 5. Push Generated Events to API
+
+First start the API:
+
+```bash
+docker compose up --build
+```
+
+Then in another terminal run:
+
+```bash
+python pipeline/push_events.py
+```
+
+This sends events from:
+
+```text
+output/events.jsonl
+```
+
+to:
+
+```text
+POST /events/ingest
+```
+
+---
 
 ## API Endpoints
 
