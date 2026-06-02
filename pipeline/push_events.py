@@ -23,7 +23,7 @@ def main():
 
     print("Status Code:", response.status_code)
     print("Response:")
-    print(response.json())
+    print(response.text)
 
 
 if __name__ == "__main__":

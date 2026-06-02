@@ -165,6 +165,15 @@ http://127.0.0.1:8000/docs
 
 ---
 
+## Running the Detection Pipeline
+
+The detection pipeline converts CCTV footage into structured behavioural events.
+
+### 1. Run Person Detection
+
+```bash
+python pipeline/detect.py
+
 ## API Endpoints
 
 ### Health
