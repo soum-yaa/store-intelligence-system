@@ -336,6 +336,50 @@ This submission includes:
 * Architecture diagram
 
 ---
+## Testing
+
+The project includes automated unit tests for core analytics and monitoring functionality.
+
+### Run Tests
+
+```bash
+pytest
+```
+
+### Current Test Status
+
+```text
+5 tests passing
+```
+
+### Test Coverage
+
+The test suite validates:
+
+* Store metrics computation
+* Unique visitor counting
+* Staff exclusion logic
+* Average dwell time calculations
+* Queue depth extraction
+* Conversion drop detection
+* Billing queue spike detection
+* Health monitoring endpoint
+
+### Example Output
+
+```text
+=================== test session starts ===================
+
+collected 5 items
+
+tests/test_anomalies.py ..       [40%]
+tests/test_health.py .           [60%]
+tests/test_metrics.py ..         [100%]
+
+==================== 5 passed ====================
+```
+
+The tests use isolated in-memory SQLite databases to ensure deterministic and repeatable execution without affecting production data.
 
 ## Future Improvements
 
